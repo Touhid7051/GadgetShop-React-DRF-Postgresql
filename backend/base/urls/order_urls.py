@@ -1,7 +1,8 @@
 from django.urls import path
-from ..views import order_views
+from rest_framework import views
+from ..views import order_views as views
 
 urlpatterns = [
-    
+    path('add/',views.addOrderItems, name='order-add')
     
 ]
