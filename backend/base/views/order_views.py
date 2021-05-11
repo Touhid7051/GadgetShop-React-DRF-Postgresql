@@ -10,7 +10,7 @@ from ..serializers import ProductSerializer,OrderItemSerializer
 from rest_framework import status
 
 @api_view(['POST'])
-@permission_classes(['isAuthenticated'])
+@permission_classes([IsAuthenticated])
 def addOrderItems(request):
     user = request.user
     data= request.data
@@ -44,7 +44,7 @@ def addOrderItems(request):
         #(3)Create order items and set order to orderItem relationship
         
         for i in orderItems:
-            product=Product.objects.get(id=i['product'])
+            product=Product.objects.get(_id=i['product'])
             
             item = OrderItem.objects.create(
                 product=product,
@@ -55,10 +55,10 @@ def addOrderItems(request):
                 image=product.image.url
             )
         
-        #(4)Update Stock
+            #(4)Update Stock
         
-        product.countInStock -= item.qty
-        product.save()
+            product.countInStock -= item.qty
+            product.save()
     
-    serializer = OrderItemSerializer(order, many=True)
-    return Response(serializer.data)
+        serializer = OrderItemSerializer(order, many=False)
+        return Response(serializer.data)
