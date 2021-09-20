@@ -76,7 +76,7 @@ import { CART_CLEAR_ITEMS } from '../constants/cartConstants'
             }
             
             const {data} = await axios.get(
-                'http://127.0.0.1:8000/api/orders/${id}/',
+                `http://127.0.0.1:8000/api/orders/${id}/`,
                 config,
                 )
             
