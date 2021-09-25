@@ -3,6 +3,7 @@ from rest_framework import serializers
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated,IsAdminUser
 from rest_framework.response import Response
+from datetime import datetime
 
 from ..models import Product, Order, OrderItem, ShippingAddress
 from ..serializers import ProductSerializer,OrderItemSerializer,OrderSerializer
@@ -83,3 +84,14 @@ def getOrderById(request, pk):
     except:
         return Response({'detail': 'Oder does not exists '},
                     status=status.HTTP_400_BAD_REQUEST)
+        
+
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])        
+def updateOrderToPaid(request, pk):
+    order = Order.objects.get(_id=pk)
+    
+    order.isPaid =  True
+    order.paidAt = datetime.now()
+    order.save()
+    return Response('Order was paid')
