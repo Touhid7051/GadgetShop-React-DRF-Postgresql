@@ -1,5 +1,5 @@
-import React,{useState,useEffect} from 'react'
-import { Button,Row,Col,ListGroup,Image,Card } from 'react-bootstrap'
+import React,{useEffect} from 'react'
+import { Row,Col,ListGroup,Image,Card } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
@@ -25,7 +25,7 @@ function OrderScreen({ match }) {
         if(!order || order._id !== Number(orderId)) {
             dispatch(getOrderDetails(orderId))
         }  
-    }, [order, orderId])
+    }, [dispatch,order, orderId])
     
    
     return loading ? (
